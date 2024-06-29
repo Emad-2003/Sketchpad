@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Home 
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1>Welcome to Sketchpad</h1>
+        <h2> Lets Get started !! </h2>
+        <a href="{% url 'login' %}">Signin</a>
+    </div>
+{% endblock %}
