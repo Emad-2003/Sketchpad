@@ -7,6 +7,7 @@ canvas{
 body{
     margin:0;
     background: #3275a8;
+    color:white;
 }
 
 .container{
@@ -14,4 +15,8 @@ body{
     background-color: #444463;
     text-align: center;
     justify-content: center;
+}
+
+.container-text{
+    color:whitesmoke;
 }

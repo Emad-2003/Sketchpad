@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block content %}
-
-    <h1 class="text-center mt-5">Sign in to your account</h1>
-    <div class="container d-flex justify-content-center align-items-center">
+    
+    
+    <div class="container min-vh-100 text-white d-flex justify-content-center align-items-center">
         <form method="post">
             {% csrf_token %}
+            <h1 >Sign in to your account</h1>
             {{form | bootstrap}}
             <button class="btn btn-primary mt-4">Login</button>
             <p>Don't have an account ? <a href="{% url 'register' %}">Register Here</a></p>
