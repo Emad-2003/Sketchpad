@@ -1,0 +1,17 @@
+canvas{
+    border:solid black;
+    border-radius: 30px;
+    background-color: white;
+}
+
+body{
+    margin:0;
+    background: #3275a8;
+}
+
+.container{
+    border-radius: 30px;
+    background-color: #444463;
+    text-align: center;
+    justify-content: center;
+}

@@ -2,8 +2,10 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
+from django.core.files.base import ContentFile
 from .forms import *
 from .models import *
+import base64
 
 # Create your views here.
 def notes_index(request):
@@ -14,6 +16,22 @@ def notes_list(request):
     notes = NotesModel.objects.all().order_by('-created_at')
     return render(request,"notes_list.html",{"notes":notes})
 
+@login_required
+def notes_create(request):
+    if request.method == 'POST':
+        image_data = request.POST.get('imageData')
+        format, imgstr = image_data.split(';base64,')
+        ext = format.split('/')[-1]
+        image_data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+
+        drawing = NotesModel(user=request.user, notes=image_data)  # Create new drawing
+        drawing.save()
+        return redirect('notes_list')
+    else:
+        form = NotesForm()
+        
+    return render(request, 'notes_form.html', {'form': form})
+'''
 @login_required
 def notes_create(request):
     if request.method=='POST':
@@ -27,6 +45,7 @@ def notes_create(request):
         form = NotesForm()
     
     return render(request,"notes_form.html",{"form":form})
+'''
 
 @login_required
 def notes_edit(request,note_id):

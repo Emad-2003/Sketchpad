@@ -1,25 +1,16 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}
     Notes
 {% endblock %}
 
-
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center">
-<h2>
-    {% if form.instance.pk %} 
-        Edit Tweet 
-    {% else %} 
-        Create Tweet 
-    {% endif%}
-</h2>
-<form method="post" enctype="multipart/form-data" class="form">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <button class="btn btn-warning" type="submit">Submit</button>    
-</form>
-<a href="{% url 'notes_list' %}">Back to tweet list</a>
-</div>
-
+    <canvas id="drawingCanvas" width='1100' height='600'></canvas>
+    <button id="saveButton">Save</button>
+    <form id="imageForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="imageData" id="imageData">
+    </form>
+    <script src="{% static 'js/notes_form.js' %}"></script> 
 {% endblock %}
