@@ -5,9 +5,13 @@
 {% endblock %}
 
 {% block content %}
+    {% for m in messages %}
+    <div class="alert alert-success" role="alert">
+        {{m}}
+    </div>
+    {% endfor %}
     <div class="container text-center mt-5">
         <h1>Welcome to Sketchpad</h1>
         <h2> Lets Get started !! </h2>
-        <a href="{% url 'login' %}">Signin</a>
     </div>
 {% endblock %}
