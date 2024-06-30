@@ -34,3 +34,16 @@ document.getElementById('saveButton').addEventListener('click', function () {
     document.getElementById('imageData').value = imageData;
     document.getElementById('imageForm').submit();
 });
+
+window.onload = function () {
+    
+    const img = new Image();
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+    };
+    img.onerror = function () {
+        console.error("Image failed to load.");
+    };
+    img.src = notesData.imageUrl;
+    console.log("Image URL: ", img.src); // Debug line to check the image URL
+};      

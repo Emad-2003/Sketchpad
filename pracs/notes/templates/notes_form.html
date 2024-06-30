@@ -12,5 +12,10 @@
         {% csrf_token %}
         <input type="hidden" name="imageData" id="imageData">
     </form>
+    <script>
+        const notesData = {
+            imageUrl: "{{ note_instance.notes.url }}"
+        };
+    </script>
     <script src="{% static 'js/notes_form.js' %}"></script> 
 {% endblock %}

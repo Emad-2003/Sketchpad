@@ -31,38 +31,22 @@ def notes_create(request):
         form = NotesForm()
         
     return render(request, 'notes_form.html', {'form': form})
-'''
-@login_required
-def notes_create(request):
-    if request.method=='POST':
-        form = NotesForm(request.POST,request.FILES)
-        if form.is_valid():
-            note = form.save(commit=False) #stores form in variable
-            note.user = request.user #gets the user who filled the form
-            note.save() #saves the form in database  
-            return redirect('notes_list')    
-    else:
-        form = NotesForm()
-    
-    return render(request,"notes_form.html",{"form":form})
-'''
 
 @login_required
 def notes_edit(request,note_id):
-    note_instance=get_object_or_404(NotesModel,pk=note_id, user=request.user)
+    note_instance = get_object_or_404(NotesModel, id=note_id, user=request.user)
+
+    if request.method == 'POST':
+        image_data = request.POST.get('imageData')
+        format, imgstr = image_data.split(';base64,')
+        ext = format.split('/')[-1]
+        image_data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+
+        note_instance.notes = image_data
+        note_instance.save()
+        return redirect('notes_list')
     
-    if request.method == "POST":
-        form = NotesForm(request.POST,request.FILES,instance=note_instance)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.user = request.user
-            note.save()
-            return redirect('notes_list')
-    
-    else:
-        form = NotesForm(instance=note_instance)
-    
-    return render(request,"notes_form.html",{"form":form})
+    return render(request,"notes_form.html",{"note_instance":note_instance})
 
 @login_required
 def notes_delete(request,note_id):
