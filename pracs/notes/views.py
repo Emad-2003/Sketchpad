@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib import messages
 from .forms import *
 from .models import *
 
@@ -10,8 +11,8 @@ def notes_index(request):
 
 @login_required
 def notes_list(request):
-    note = NotesModel.objects.all().order_by('-created_at')
-    return render(request,"notes_list.html",{"note":note})
+    notes = NotesModel.objects.all().order_by('-created_at')
+    return render(request,"notes_list.html",{"notes":notes})
 
 @login_required
 def notes_create(request):
@@ -34,10 +35,10 @@ def notes_edit(request,note_id):
     if request.method == "POST":
         form = NotesForm(request.POST,request.FILES,instance=note_instance)
         if form.is_valid():
-            tweet = form.save(commit=False)
-            tweet.user = request.user
-            tweet.save()
-            return redirect('tweet_list')
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+            return redirect('notes_list')
     
     else:
         form = NotesForm(instance=note_instance)
@@ -46,12 +47,13 @@ def notes_edit(request,note_id):
 
 @login_required
 def notes_delete(request,note_id):
-    tweet_instance=get_object_or_404(NotesModel,pk=note_id, user=request.user)
+    notes_instance=get_object_or_404(NotesModel,pk=note_id, user=request.user)
     
     if request.method == "POST":
-        tweet_instance.delete()
+        notes_instance.delete()
+        messages.info(request,"successfully deleted")
         return redirect("notes_list")
-    return render(request,"notes_list.html")
+    return render(request,"notes_delete_confirm.html")
 
 def register(request):
     if request.method=='POST':

@@ -10,4 +10,4 @@ class NotesModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'{self.user.username}->{self.text}'
+        return f'{self.user.username}->{self.title}'

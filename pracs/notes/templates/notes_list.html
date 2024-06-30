@@ -6,19 +6,23 @@
 
 
 {% block content %}
-
+    {% for m in messages %}
+        <div class="alert alert-success" role="alert">
+            {{m}}
+        </div>
+    {% endfor %}
     <a class="btn btn-primary mt-4 mb-4" href="{% url 'notes_create' %}">Take a new Note</a>
-
+    
     <div class='container row gap-3 mt-4'>
         {% for note in notes %}
-            {% if tweet.user == user %}
+            {% if note.user == user %}
             <div class="card" style="width: 18rem;">
                 <img src="{{note.notes.url}}" class="card-img-top" alt="...">
                 <div class="card-body">
                 <h5 class="card-title">{{ note.title }}</h5>
                 
-                <a href="{% url 'notes_edit' tweet.id %}" class="btn btn-primary">Edit</a>
-                <a href="{% url 'notes_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'notes_edit' note.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'notes_delete' note.id %}" class="btn btn-danger">Delete</a>
                 
                 </div>
             </div>
